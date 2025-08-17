@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Сервис рассылок{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+
+</head>
+<body style="background: linear-gradient(to bottom, wheat, white);">
+
+    <div class="container">
+        <div class="container mt5">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <footer class="pt-4 my-md-5 pt-md-5 border-top" style="border-color: brown;">
+        <div class="row">
+            <div class="col-12 col-md"></div>
+            <div class="col-12 col-md">
+                Сервис рассылок
+                <small class="d-block mb-3 text-muted">&copy; 2025</small>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Категории</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Рассылки</a></li>
+                    <li><a class="text-muted" href="#">Сообщения</a></li>
+                    <li><a class="text-muted" href="#">Получатели рассылок</a></li>
+                    <li><a class="text-muted" href="#">Отчеты и статистика</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Дополнительно</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Мы в Телеграмм</a></li>
+                    <li><a class="text-muted" href="#">Мы в VK</a></li>
+                    <li><a class="text-muted" href="#">Мы в Watsapp</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>О нас</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="/contacts/">Контакты</a></li>
+                </ul>
+            </div>
+            <div class="col-12 col-md"></div>
+        </div>
+    </footer>
+</div>
+<script src="/static/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
