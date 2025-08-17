@@ -1,29 +1,31 @@
-<nav class="navbar navbar-light bg-light">
-  <nav class="container-fluid">
-    <h3 class="my-0 mr-md-auto font-weight-normal" style="color: wheat;">Сервис для вашего бизнеса</h3>
-    {% if user.is_authenticated %}
-      <p class="display-8" style="text-align: left;">Добро пожаловать, {{user.username}}!</p>
-    <nav class="ms-5">
-            <form method="post" action="{% url 'users:logout' %}" style="display: inline;">
-                {% csrf_token %}
-                <button class="p-2 btn btn-outline-dark btn-lg" type="submit">Выйти
-                </button>
-            </form>
+
+{% if user.is_authenticated %}
+<div class="row">
+  <h5 class="display-5" style="color: black; text-align: center;">Добро пожаловать, {{user.email}}!</h5>
+</div>
+
+<nav class="container-fluid">
+    <nav class="nav nav-pills flex-column flex-sm-row">
+        <form method="post" action="{% url 'users:logout' %}" style="display: inline;">
+            {% csrf_token %}
+            <button class="flex-sm-fill text-sm-center nav-link p-2 btn btn-outline-dark btn-lg" type="submit">Выйти
+            </button>
+        </form>
         {% else %}
-        <p class="display-8" style="text-align: left;">Добро пожаловать, Гость!</p>
-            <nav class="ms-5">
-                <a class="p-2 btn btn-warning btn-lg" href="{% url 'users:login' %}">Авторизоваться</a>
-                <a class="p-2 btn btn-outline-dark btn-lg" href="{% url 'users:register' %}">Регистрация</a>
-            </nav>
+        <h5 class="display-8" style="text-align: center;">Добро пожаловать, Гость!</h5>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <a class="flex-sm-fill text-sm-center p-3 btn btn-lg" style="color: black; background: #C26C4A;" href="{% url 'users:login' %}">Авторизоваться</a>
+
+                <a class="flex-sm-fill text-sm-center p-3 btn btn-light btn-lg" href="{% url 'users:register' %}">Регистрация</a>
+            </div>
         {% endif %}
     </nav>
-    <nav class="ms-5">
-        <a class="p-2 btn btn-outline-warning btn-lg" href="#">Главная</a>
-        <a class="p-2 btn btn-outline-warning btn-lg" href="#">Контакты</a>
-        <a class="p-2 btn btn-outline-warning btn-lg" href="#">Рассылки</a>
-        <a class="p-2 btn btn-outline-warning btn-lg" href="#">Сообщения</a>
-        <a class="p-2 btn btn-outline-warning btn-lg" href="#">Получатели рассылок</a>
-        <a class="p-2 btn btn-outline-warning btn-lg" href="#">Попытки рассылок</a>
+    <nav class="nav nav-pills flex-column flex-sm-row" style="margin-top: 10px;">
+        <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="#">Главная</a>
+        <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="#" >Рассылки</a>
+        <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="#">Сообщения</a>
+        <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="#">Получатели рассылок</a>
+        <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="#">Попытки рассылок</a>
     </nav>
 </nav>
 
