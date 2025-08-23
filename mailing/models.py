@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import CustomUser
+from django.utils import timezone
 
 class Recipient(models.Model):
     """Модель для создания получателя рассылки"""
@@ -33,20 +34,20 @@ class Message(models.Model):
         ordering = ['topik', ]
         db_table = 'messages'
 
+
 class Mailing(models.Model):
     """Модель для создания рассылок"""
-    STATUS_CREATED = 'created'
-    STATUS_STARTED = 'started'
-    STATUS_FINISHED = 'finished'
+    STATUS_CREATED = 'создана'
+    STATUS_STARTED = 'запущена'
+    STATUS_FINISHED = 'завершена'
     STATUS_CHOICES = [
-                      (STATUS_CREATED, 'Создана'),
-                      (STATUS_STARTED, 'Запущена'),
-                      (STATUS_FINISHED, 'Завершена'),
+                      (STATUS_CREATED, 'создана'),
+                      (STATUS_STARTED, 'запущена'),
+                      (STATUS_FINISHED, 'завершена'),
                      ]
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     finished_at = models.DateTimeField(auto_now=True, verbose_name='Дата завершения')
-    is_active = models.BooleanField(default=False, verbose_name='Активная')
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=STATUS_CREATED, verbose_name='Статус')
     message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name='mailings', verbose_name='Сообщение', blank=True)
     recipients = models.ManyToManyField(Recipient, related_name='mailings', verbose_name='Получатели')
@@ -59,4 +60,30 @@ class Mailing(models.Model):
         db_table = 'mailings'
 
     def __str__(self):
-        return f"Рассылка {self.pk} - {self.status}"
+        return f"Рассылка {self.pk} от пользователя {self.owner} - {self.status}"
+
+
+class SendAttempt(models.Model):
+    """Модель попытки рассылки"""
+    STATUS_SUCCESS = 'успешно'
+    STATUS_UNSUCCES = 'не успешно'
+    STATUS_CHOICES = [
+        (STATUS_SUCCESS, 'успешно'),
+        (STATUS_UNSUCCES, 'не успешно'),
+    ]
+
+    attempt_datetime = models.DateTimeField(default=timezone.now, verbose_name='Дата попытки')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=STATUS_UNSUCCES, verbose_name='Статус попытки')
+    server_response = models.TextField(verbose_name='Ответ сервера')
+    mailing = models.ForeignKey('Mailing', on_delete=models.CASCADE, related_name='send_attempts', verbose_name='Рассылка')
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='send_attempts', verbose_name='Владелец',
+                              blank=True, null=True)
+
+    def __str__(self):
+        return f"Попытка для рассылки {self.mailing} от пользователя {self.owner} — {self.status} ({self.attempt_datetime})"
+
+    class Meta:
+        verbose_name = 'Попытка'
+        verbose_name_plural = 'Попытки'
+        ordering = ['status', 'attempt_datetime']
+        db_table = 'send_attempts'

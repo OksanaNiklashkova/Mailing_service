@@ -1,14 +1,15 @@
 
 {% if user.is_authenticated %}
 <div class="row">
-  <h5 class="display-5" style="color: black; text-align: center;">Добро пожаловать, {{user.email}}!</h5>
+  <h5 class="display-5" style="color: black; text-align: center;">Добро пожаловать, </h5>
+    <a class="display-5" style="color: black; text-align: center;" href="{% url 'users:user_info' user.pk %}" >{{user.email}}!</a>
 </div>
 
 <nav class="container-fluid">
     <nav class="nav nav-pills flex-column flex-sm-row">
         <form method="post" action="{% url 'users:logout' %}" style="display: inline;">
             {% csrf_token %}
-            <button class="flex-sm-fill text-sm-center nav-link p-2 btn btn-outline-dark btn-lg" type="submit">Выйти
+            <button class="flex-sm-fill text-sm-center p-1 btn btn-lg" style="color: black; background: #C26C4A;" type="submit">Выйти
             </button>
         </form>
         {% else %}
@@ -21,7 +22,7 @@
         {% endif %}
     </nav>
     <nav class="nav nav-pills flex-column flex-sm-row" style="margin-top: 10px;">
-        <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="#">Главная</a>
+        <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="{% url 'mailing:home' %}">Главная</a>
         <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="#" >Рассылки</a>
         <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="#">Сообщения</a>
         <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="#">Получатели рассылок</a>

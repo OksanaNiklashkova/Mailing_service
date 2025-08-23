@@ -1,0 +1,16 @@
+{% extends 'mailing/base.html' %}
+
+{% block title %}Редактирование профиля пользователя{% endblock %}
+
+{% block content %}
+{% include 'mailing/header.html' %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h2 class="display-4">Профиль пользователя: {{user.email}}</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><a href="{% url 'users:password_change' %}" class="btn btn-warning">Изменить пароль</a></p>
+        <p><button type="submit" class="p-3 btn btn-primary btn-lg">  Сохранить  </button></p>
+    </form>
+</div>
+{% endblock %}

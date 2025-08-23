@@ -1,0 +1,38 @@
+{% extends 'mailing/base.html' %}
+
+{% block title %}Информация о пользователе{% endblock %}
+
+{% block content %}
+{% include 'mailing/header.html' %}
+<div class="class=container-fluid">
+    <div class="col-9">
+        <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+            <div class="card mb-3" style="max-width: 1080px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="/media/{{ user.avatar }}" class="img-fluid rounded-start" alt="Нет фото">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h4 class="card-title">Электронная почта: {{user.email}}</h4>
+                            <p class="card-text">Имя пользователя - {{user.username|default:"не указано"}}</p>
+                            <p class="card-text">Телефон - {{user.phone|default:"не указан"}}</p>
+                            <p class="card-text">Страна - {{user.country|default:"не указана"}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="class=nav nav-pills flex-column flex-sm-row" style="margin: 10px;">
+        {% if user == user %}
+        <a href="{% url 'users:user_form' user.pk %}" class="btn btn-success"
+           style="margin: 3px;">Редактировать профиль</a>
+        <a href="{% url 'users:password_change' %}" class="btn btn-warning">Изменить пароль</a>
+        {% endif %}
+        <a href="{% url 'mailing:home' %}" class="btn btn-primary" style="margin: 3px;">Вернуться на главную страницу</a>
+    </div>
+</div>
+
+
+{% endblock %}
