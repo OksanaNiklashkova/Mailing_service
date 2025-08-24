@@ -1,0 +1,25 @@
+{% extends 'mailing/base.html' %}
+
+{% block title %}Список получателей рассылки{% endblock %}
+
+{% block content %}
+{% include 'mailing/header.html' %}
+<a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="{% url 'mailing:recipient_new' %}">Добавить нового получателя</a>
+<h4>Список получателей рассылок</h4>
+<table class="table">
+    <thead>
+    <tr>
+    <th scope="col" style="color: white; background: #C26C4A;">Почта получателя</th>
+    <th scope="col" style="background: burlywood;">ФИО получателя</th>
+    <th scope="col" style="background: wheat;">Комментарий</th>
+    </tr>
+    </thead>
+{% for recipient in recipients %}
+<tr class="table-warning">
+    <td class="table-danger" ><a href="{% url 'mailing:recipient' recipient.pk %}">{{recipient.email}}</a></td>
+    <td class="table-warning">{{recipient.recipient_name}}</td>
+    <td class="table-light">{{recipient.comment|truncatechars:150|default:"Нет комментария"}}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
