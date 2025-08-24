@@ -4,8 +4,8 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from mailing.forms import MessageForm, RecipientForm
-from mailing.models import Message, Recipient
+from mailing.forms import MessageForm, RecipientForm, MailingForm
+from mailing.models import Message, Recipient, Mailing
 
 
 class HomeView(TemplateView):
@@ -30,11 +30,13 @@ class MessageDetailView(DetailView):
     template_name = 'mailing/message.html'
     context_object_name = 'message'
 
+
 class MessageListView(ListView):
     """Контроллер для просмотра списка сообщений"""
     model = Message
     template_name = 'mailing/message_list.html'
     context_object_name = 'messages'
+
 
 class MessageUpdateView(UpdateView):
     """Контроллер для редактирования сообщения"""
@@ -46,6 +48,7 @@ class MessageUpdateView(UpdateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
 
 class MessageDeleteView(DeleteView):
     """Контроллер для удаления сообщения"""
@@ -117,6 +120,63 @@ class RecipientDeleteView(DeleteView):
             return HttpResponseForbidden("У вас нет прав для удаления профиля получателя рассылки")
         recipient.delete()
         return redirect('mailing:recipient_list')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class MailingListView(ListView):
+    """Контроллер для просмотра списка рассылок"""
+    model = Mailing
+    template_name = 'mailing/mailing_list.html'
+    context_object_name = 'mailings'
+
+
+class MailingDetailView(DetailView):
+    """Контроллер для просмотра рассылки"""
+    model = Mailing
+    template_name = 'mailing/mailing.html'
+    context_object_name = 'mailing'
+
+
+class MailingCreateView(CreateView):
+    """Контроллер для создания рассылки"""
+    model = Mailing
+    form_class = MailingForm
+    template_name = 'mailing/mailing_form.html'
+    success_url = reverse_lazy('mailing:mailing_list')
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
+
+class MailingUpdateView(UpdateView):
+    """Контроллер для редактирования рассылки"""
+    model = Mailing
+    form_class = MailingForm
+    template_name = 'mailing/mailing_form.html'
+    context_object_name = 'mailing'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class MailingDeleteView(DeleteView):
+    """Контроллер для удаления рассылки"""
+    model = Mailing
+    template_name = 'mailing/mailing_confirm_delete.html'
+    success_url = reverse_lazy('mailing:mailing_list')
+
+    def post(self, request, *args, **kwargs):
+        mailing = get_object_or_404(Mailing, id=kwargs.get('pk'))
+        user = self.request.user
+        if user != mailing.owner:
+            return HttpResponseForbidden("У вас нет прав для удаления рассылки")
+        mailing.delete()
+        return redirect('mailing:mailing_list')
 
     def form_valid(self, form):
         form.instance.user = self.request.user

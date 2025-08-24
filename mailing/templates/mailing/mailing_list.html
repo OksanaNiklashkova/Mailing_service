@@ -1,0 +1,32 @@
+{% extends 'mailing/base.html' %}
+
+{% block title %}Список рассылoк{% endblock %}
+
+{% block content %}
+{% include 'mailing/header.html' %}
+<a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="{% url 'mailing:mailing_new' %}">Создать новую рассылку</a>
+<h4>Список рассылок</h4>
+<table class="table">
+    <thead>
+    <tr>
+    <th scope="col" style="color: white; background: #C26C4A;">Тема</th>
+    <th scope="col" style="background: #f9b380;">Статус</th>
+    <th scope="col" style="background: burlywood;">Период</th>
+    <th scope="col" style="background: wheat;">Отправка</th>
+    </tr>
+    </thead>
+{% for mailing in mailings %}
+<tr class="table-warning">
+    <td class="table-danger" ><a href="{% url 'mailing:mailing' mailing.pk %}">{{mailing.message.topik}}</a></td>
+    <td class="table-warning">{{mailing.status}}</td>
+    <td class="table-secondary">{{mailing.started_at|date:"d M Y"|default:"не начата"}}-{{mailing.finished_at|date:"d M Y"|default:"не завершена"}}</td>
+    <td class="table-light">
+        <a href="{% url 'mailing:mailing' mailing.pk %}" class="btn btn-outline-success btn-sm">Просмотр</a>
+        {% if user == mailing.owner %}
+        <a href="{% url 'mailing:mailing' mailing.pk %}" class="btn btn-outline-warning btn-sm">Отправить</a>
+        {% endif %}
+    </td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
