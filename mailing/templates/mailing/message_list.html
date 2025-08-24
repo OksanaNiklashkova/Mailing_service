@@ -1,0 +1,26 @@
+{% extends 'mailing/base.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+{% include 'mailing/header.html' %}
+<a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="{% url 'mailing:message_new' %}">Создать сообщение</a>
+<h4>Список сообщений для рассылок</h4>
+<table class="table">
+    <thead>
+    <tr>
+    <th scope="col" style="color: white; background: #C26C4A;">Тема</th>
+    <th scope="col" style="background: wheat;">Текст</th>
+    </tr>
+    </thead>
+{% for message in messages %}
+<tr class="table-warning">
+    <td class="table-danger" ><a href="{% url 'mailing:message' message.pk %}">{{message.topik}}</a></td>
+    <td class="table-light">{{message.text|truncatechars:150}}</td>
+</tr>
+
+
+
+{% endfor %}
+</table>
+{% endblock %}

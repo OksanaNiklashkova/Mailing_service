@@ -1,8 +1,8 @@
 
 {% if user.is_authenticated %}
 <div class="row">
-  <h5 class="display-5" style="color: black; text-align: center;">Добро пожаловать, </h5>
-    <a class="display-5" style="color: black; text-align: center;" href="{% url 'users:user_info' user.pk %}" >{{user.email}}!</a>
+  <h6 class="display-7" style="color: black; text-align: center;">Добро пожаловать, <a class="display-7" style="color: black; text-align: center;" href="{% url 'users:user_info' user.pk %}" >{{user.email}}!</a></h6>
+
 </div>
 
 <nav class="container-fluid">
@@ -13,7 +13,7 @@
             </button>
         </form>
         {% else %}
-        <h5 class="display-8" style="text-align: center;">Добро пожаловать, Гость!</h5>
+        <h6 class="display-7" style="text-align: center;">Добро пожаловать, Гость!</h6>
             <div class="d-grid gap-2 col-6 mx-auto">
                 <a class="flex-sm-fill text-sm-center p-3 btn btn-lg" style="color: black; background: #C26C4A;" href="{% url 'users:login' %}">Авторизоваться</a>
 
@@ -24,14 +24,13 @@
     <nav class="nav nav-pills flex-column flex-sm-row" style="margin-top: 10px;">
         <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="{% url 'mailing:home' %}">Главная</a>
         <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="#" >Рассылки</a>
-        <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="#">Сообщения</a>
+        <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="{% url 'mailing:message_list' %}">Сообщения</a>
         <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="#">Получатели рассылок</a>
         <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="#">Попытки рассылок</a>
     </nav>
 </nav>
 
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" style="background: radial-gradient(ellipse at center, brown, white); margin-bottom: 10px;">
+<div class="pricing-header px-3 py-3 pt-md-5 mx-auto text-center" style="background: radial-gradient(ellipse at center, wheat, brown, wheat, brown); margin-bottom: 10px;">
     <h1 class="display-1" style="color: white;">Сервис рассылок</h1>
     <p class="lead" style="color: white;">С нашим сервисом о вас узнают все!</p>
 </div>
-</nav>
