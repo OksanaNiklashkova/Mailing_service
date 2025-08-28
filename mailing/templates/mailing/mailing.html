@@ -18,7 +18,7 @@
 
 {% if user == mailing.owner %}
 <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-  <a href="#" class="btn btn-success">Отправить</a>
+  <a href="{% url 'mailing:send_mailing' mailing.pk %}" class="btn btn-success">Отправить</a>
   <a href="{% url 'mailing:mailing_edit' mailing.pk %}" class="btn btn-warning">Редактировать</a>
   <a href="{% url 'mailing:mailing_delete' mailing.pk %}" type="button" class="btn btn-danger">Удалить</a>
 {% endif %}

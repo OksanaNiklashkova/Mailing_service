@@ -23,7 +23,7 @@
     <td class="table-light">
         <a href="{% url 'mailing:mailing' mailing.pk %}" class="btn btn-outline-success btn-sm">Просмотр</a>
         {% if user == mailing.owner %}
-        <a href="{% url 'mailing:mailing' mailing.pk %}" class="btn btn-outline-warning btn-sm">Отправить</a>
+        <a href="{% url 'mailing:send_mailing' mailing.pk %}" class="btn btn-outline-warning btn-sm">Отправить</a>
         {% endif %}
     </td>
 </tr>

@@ -11,16 +11,22 @@
     <tr>
     <th scope="col" style="color: white; background: #C26C4A;">Тема</th>
     <th scope="col" style="background: wheat;">Текст</th>
+    <th scope="col" style="background: white;">Действия</th>
     </tr>
     </thead>
 {% for message in messages %}
 <tr class="table-warning">
     <td class="table-danger" ><a href="{% url 'mailing:message' message.pk %}">{{message.topik}}</a></td>
     <td class="table-light">{{message.text|truncatechars:150}}</td>
+        <td class="table-light">
+        {% if user == message.owner %}
+        <p><a href="{% url 'mailing:message' message.pk %}" class="btn btn-success btn-sm">Просмотреть</a></p>
+        <p><a href="{% url 'mailing:message_edit' message.pk %}" class="btn btn-warning btn-sm">Редактировать</a></p>
+        <p><a href="{% url 'mailing:message_delete' message.pk %}" class="btn btn-danger btn-sm">Удалить</a></p>
+        {% endif %}
+        <a href="{% url 'mailing:home' %}" class="btn btn-sm" style="color: black; background: #C26C4A;">На главную</a>
+    </td>
 </tr>
-
-
-
 {% endfor %}
 </table>
 {% endblock %}

@@ -12,13 +12,24 @@
     <th scope="col" style="color: white; background: #C26C4A;">Почта получателя</th>
     <th scope="col" style="background: burlywood;">ФИО получателя</th>
     <th scope="col" style="background: wheat;">Комментарий</th>
+    <th scope="col" style="background: white;">Действия</th>
     </tr>
     </thead>
 {% for recipient in recipients %}
 <tr class="table-warning">
-    <td class="table-danger" ><a href="{% url 'mailing:recipient' recipient.pk %}">{{recipient.email}}</a></td>
+    <td class="table-danger" >{{recipient.email}}</td>
     <td class="table-warning">{{recipient.recipient_name}}</td>
-    <td class="table-light">{{recipient.comment|truncatechars:150|default:"Нет комментария"}}</td>
+    <td class="table-success">{{recipient.comment|truncatechars:150|default:"Нет комментария"}}</td>
+    <td class="table-light">
+        {% if user == recipient.owner %}
+        <p><a href="{% url 'mailing:recipient' recipient.pk %}" class="btn btn-success btn-sm">Просмотреть</a></p>
+        <p><a href="{% url 'mailing:recipient_edit' recipient.pk %}" class="btn btn-warning btn-sm">Редактировать</a></p>
+        <p><a href="{% url 'mailing:recipient_delete' recipient.pk %}" class="btn btn-danger btn-sm">Удалить</a></p>
+
+        {% endif %}
+        <a href="{% url 'mailing:home' %}" class="btn btn-sm" style="color: black; background: #C26C4A;">На главную</a>
+    </td>
+
 </tr>
 {% endfor %}
 </table>

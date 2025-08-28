@@ -3,6 +3,8 @@ from django import forms
 
 from mailing.models import Message, Recipient, Mailing
 
+class DateTimeLocalInput(forms.DateTimeInput):
+    input_type = 'datetime-local'
 
 class MessageForm(forms.ModelForm):
     """Форма для создания нового сообщения"""

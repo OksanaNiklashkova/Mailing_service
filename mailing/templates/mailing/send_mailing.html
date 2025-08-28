@@ -1,0 +1,11 @@
+{% extends 'mailing/base.html' %}
+
+{% block title %}Отчет об успешности отправки{% endblock %}
+
+{% block content %}
+{% include 'mailing/header.html' %}
+<h2 class="pt-3 pb-2 mb-3">Pассылкa {{mailing.pk}} отправлена пользователем {{owner}} {% if success %} успешно {% else %} неуспешно {% endif %}</h2>
+<a href="{% url 'mailing:send_attempt' attempt.pk %}" class="btn btn-outline-success btn-sm">Подробнее</a>
+<a href="{% url 'mailing:send_attempt_list' %}" class="btn btn-sm" style="color: black; background: burlywood;">К списку попыток рассылок</a>
+<a href="{% url 'mailing:home' %}" class="btn btn-sm" style="color: black; background: #C26C4A;">На главную</a>
+{% endblock %}
