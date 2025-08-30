@@ -12,5 +12,14 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username',]
 
+    class Meta:
+        verbose_name = 'пользователь'
+        verbose_name_plural = 'пользователи'
+        ordering = ['email', ]
+        permissions = [
+            ('can_blocked_user', 'Can blocked user'),
+        ]
+
+
     def __str__(self):
         return self.email

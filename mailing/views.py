@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -6,7 +7,7 @@ from django.views import View
 from django.views.generic import TemplateView, DetailView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from mailing.forms import MessageForm, RecipientForm, MailingForm
+from mailing.forms import MessageForm, RecipientForm, MailingForm, MailingManagerForm
 from mailing.models import Message, Recipient, Mailing, SendAttempt
 from mailing.services import send_message
 
@@ -173,6 +174,15 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.owner:
+            return MailingForm
+        if user.has_perm('mailing.can_finished_mailing'):
+            return MailingManagerForm
+        else:
+            raise PermissionDenied("У вас нет прав для редактирования этого продукта")
 
 
 class MailingDeleteView(LoginRequiredMixin, DeleteView):

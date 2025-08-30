@@ -47,6 +47,22 @@ class CustomUserForm(UserChangeForm):
         self.fields['phone'].widget.attrs.update({'placeholder': 'Телефон пользователя', })
         self.fields['country'].widget.attrs.update({'placeholder': 'Страна проживания', })
 
+
+class CustomUserManagerForm(UserChangeForm):
+    """форма блокировки пользователя"""
+    class Meta:
+        model = CustomUser
+        fields = ['is_active',]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if 'password' in self.fields:
+            del self.fields['password']
+
+        self.fields['is_active'].widget.attrs['class'] = 'form-check-input'
+        self.fields['is_active'].help_text = 'Для блокировки пользователя уберите галочку'
+
+
 class UserPasswordChangeForm(PasswordChangeForm):
     old_password = forms.CharField(label="Старый пароль", widget=forms.PasswordInput(attrs={'class': 'form-input'}))
     new_password1 = forms.CharField(label="Новый пароль", widget=forms.PasswordInput(attrs={'class': 'form-input'}))

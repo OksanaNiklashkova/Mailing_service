@@ -16,12 +16,17 @@
         <p>Время действия: {{mailing.started_at|date:"d M Y"|default:"не начата"}} - {{mailing.finished_at|date:"d M Y"|default:"не завершена"}}</p>
     </div>
 
-{% if user == mailing.owner %}
+
 <div class="btn-group d-flex flex-row gap-1" role="group" style="min-width: 100px; margin: 10px;">
+  {% if user == mailing.owner %}
   <a href="{% url 'mailing:send_mailing' mailing.pk %}" class="btn btn-success" style="margin: 5px;">Отправить</a>
-  <a href="{% url 'mailing:mailing_edit' mailing.pk %}" class="btn btn-warning" style="margin: 5px;">Редактировать</a>
+  {% endif %}
+    {% if user == mailing.owner or perms.mailing.can_finished_mailing %}
+    <a href="{% url 'mailing:mailing_edit' mailing.pk %}" class="btn btn-warning" style="margin: 5px;">Редактировать</a>
+    {% endif %}
+  {% if user == mailing.owner %}
   <a href="{% url 'mailing:mailing_delete' mailing.pk %}" type="button" class="btn btn-danger" style="margin: 5px;">Удалить</a>
-{% endif %}
+  {% endif %}
   <a href="{% url 'mailing:mailing_list' %}" type="button" class="btn" style="color: black; background: #C26C4A; margin: 5px;">Вернуться к списку рассылок</a>
 </div>
 </div>

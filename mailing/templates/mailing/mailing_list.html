@@ -22,11 +22,13 @@
     <td class="table-secondary">{{mailing.started_at|date:"d M Y"|default:"не начата"}}-{{mailing.finished_at|date:"d M Y"|default:"не завершена"}}</td>
     <td class="table-light">
         <div class="d-flex flex-column gap-1" style="min-width: 100px;">
+            {% if user == mailing.owner or perms.mailing.can_finished_mailing %}
             <a href="{% url 'mailing:mailing' mailing.pk %}" class="btn btn-sm w-100 py-1" style="background: burlywood; margin: 5px;">Просмотр</a>
-            {% if user == mailing.owner %}
-            <a href="{% url 'mailing:send_mailing' mailing.pk %}" class="btn btn-info btn-sm w-100 py-1" style="margin: 5px;">Отправить</a>
             <a href="{% url 'mailing:mailing_edit' mailing.pk %}" class="btn btn-warning btn-sm w-100 py-1" style="margin: 5px;">Редактировать</a>
+            {% endif %}
+            {% if user == mailing.owner %}
             <a href="{% url 'mailing:mailing_delete' mailing.pk %}" type="button" class="btn btn-danger btn-sm w-100 py-1" style="margin: 5px;">Удалить</a>
+            <a href="{% url 'mailing:send_mailing' mailing.pk %}" class="btn btn-info btn-sm w-100 py-1" style="margin: 5px;">Отправить</a>
             {% endif %}
         </div>
 

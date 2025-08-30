@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django import forms
+from django.http import request
 
 from mailing.models import Message, Recipient, Mailing
 
@@ -39,13 +40,21 @@ class RecipientForm(forms.ModelForm):
 
 
 class MailingForm(forms.ModelForm):
-    """Форма для создания нового получателя рассылки"""
+    """Форма для создания новой рассылки"""
     message = forms.ModelChoiceField(queryset=Message.objects.all())
     recipients = forms.ModelMultipleChoiceField(
         queryset=Recipient.objects.all(),
         widget=forms.CheckboxSelectMultiple
     )
+
     class Meta:
         model = Mailing
         fields = ['message', 'recipients', 'status', 'started_at', 'finished_at',]
         exclude = []
+
+
+class MailingManagerForm(forms.ModelForm):
+    """Форма редактирования рассылки для менеджера"""
+    class Meta:
+        model = Mailing
+        fields = ['status',]

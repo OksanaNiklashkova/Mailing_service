@@ -59,6 +59,9 @@ class Mailing(models.Model):
         verbose_name_plural = 'рассылки'
         ordering = ['pk']
         db_table = 'mailings'
+        permissions = [
+            ('can_finished_mailing', 'Can finished mailing'),
+        ]
 
     def __str__(self):
         return f"Рассылка {self.pk} от пользователя {self.owner} - {self.status}"

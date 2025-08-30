@@ -22,8 +22,10 @@
     <td class="table-success">{{recipient.comment|truncatechars:150|default:"Нет комментария"}}</td>
     <td class="table-light">
     <div class="d-flex flex-column gap-1" style="min-width: 100px;">
-        {% if user == recipient.owner %}
+        {% if user == recipient.owner or perms.mailing.can_finished_mailing %}
         <a href="{% url 'mailing:recipient' recipient.pk %}" class="btn btn-success btn-sm w-100 py-1">Просмотреть</a>
+        {% endif %}
+        {% if user == recipient.owner %}
         <a href="{% url 'mailing:recipient_edit' recipient.pk %}" class="btn btn-warning btn-sm w-100 py-1">Редактировать</a>
         <a href="{% url 'mailing:recipient_delete' recipient.pk %}" class="btn btn-danger btn-sm w-100 py-1">Удалить</a>
         {% endif %}

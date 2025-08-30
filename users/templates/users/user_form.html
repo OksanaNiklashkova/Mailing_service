@@ -9,7 +9,9 @@
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
+        {% if is_owner %}
         <p><a href="{% url 'users:password_change' %}" class="btn btn-warning">Изменить пароль</a></p>
+        {% endif %}
         <p><button type="submit" class="p-3 btn btn-primary btn-lg">  Сохранить  </button></p>
     </form>
 </div>

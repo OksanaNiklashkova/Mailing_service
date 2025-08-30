@@ -1,0 +1,45 @@
+{% extends 'mailing/base.html' %}
+
+{% block title %}Список пользователей{% endblock %}
+
+{% block content %}
+{% include 'mailing/header.html' %}
+<h4>Список пользователей</h4>
+<table class="table">
+    <thead>
+    <tr>
+    <th scope="col">Активен</th>
+    <th scope="col" style="color: white; background: #C26C4A;">Электронная почта</th>
+    <th scope="col" style="background: #f9b380;">Имя пользователя</th>
+    <th scope="col" style="background: burlywood;">Телефон, страна</th>
+    <th scope="col" style="background: wheat; width: 120px;">Аватар</th>
+    </tr>
+    </thead>
+{% for user in users %}
+<tr class="table">
+    <td class="table-secondary" >
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="true" id="flexCheckCheckedDisabled" {% if user.is_active %}checked{% endif %} disabled>
+        </div>
+    </td>
+    <td class="table-danger" >{{user.email}}
+        <p><a class="flex-sm-fill text-sm-center p-2 btn btn-sm" style="color: black; background: burlywood;"
+           href="{% url 'users:user_form' user.pk %}">Заблокировать</a></p>
+    </td>
+    <td class="table-warning">{{user.username|default:"не указано"}}</td>
+    <td class="table-secondary">
+        <p>Телефон - {{user.phone|default:"не указан"}}</p>
+        <p>Страна - {{user.country|default:"не указана"}}</p>
+    </td>
+    <td class="table-light" style="width: 120px;">
+        <div class="col-md-2">
+            <img src="/media/{{ user.avatar }}" class="img-fluid rounded-start" alt="Нет фото" style="max-width: 80px; height: auto;">
+        </div>
+    </td>
+</tr>
+{% endfor %}
+</table>
+<div class="class=nav nav-pills flex-column flex-sm-row" style="margin: 10px;">
+    <a href="{% url 'mailing:home' %}" class="btn btn-primary" style="margin: 3px;">Вернуться на главную страницу</a>
+</div>
+{% endblock %}
