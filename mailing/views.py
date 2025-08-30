@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from mailing.forms import MessageForm, RecipientForm, MailingForm, MailingManagerForm
 from mailing.models import Message, Recipient, Mailing, SendAttempt
 from mailing.services import send_message
+from django.core.cache import cache
 
 
 class HomeView(TemplateView):
@@ -17,9 +18,17 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['mailings'] = len(Mailing.objects.all())
-        context['started_mailings'] = len(Mailing.objects.filter(status='запущена'))
-        context['recipients'] = len(Recipient.objects.all())
+        cache_key = 'home_stats'
+        stats = cache.get(cache_key)
+
+        if not stats:
+            stats = {
+                'mailings': len(Mailing.objects.all()),
+                'started_mailings': Mailing.objects.filter(status='запущена').count(),
+                'recipients': Recipient.objects.values('email').distinct().count()
+            }
+            cache.set(cache_key, stats, 60 * 15)
+        context.update(stats)
         return context
 
 
@@ -158,9 +167,16 @@ class MailingCreateView(LoginRequiredMixin, CreateView):
     template_name = 'mailing/mailing_form.html'
     success_url = reverse_lazy('mailing:mailing_list')
 
+    def get_form_kwargs(self):
+        """Передаем пользователя в форму"""
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
     def form_valid(self, form):
         form.instance.owner = self.request.user
         return super().form_valid(form)
+
 
 
 class MailingUpdateView(LoginRequiredMixin, UpdateView):
@@ -224,7 +240,14 @@ class SendAttemptListView(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        queryset = SendAttempt.objects.filter(owner=self.request.user).order_by('attempt_datetime')
+        if not self.request.user.is_authenticated:
+            raise PermissionDenied("Вы не авторизованы")
+
+        cache_key = f'mailings_attempts_user_{self.request.user.pk}'
+        queryset = cache.get(cache_key)
+        if not queryset:
+            queryset = SendAttempt.objects.filter(owner=self.request.user).order_by('attempt_datetime')
+            cache.set(cache_key, queryset, 60 * 15)
         return queryset
 
 

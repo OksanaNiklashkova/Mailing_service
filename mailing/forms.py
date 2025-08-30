@@ -41,16 +41,27 @@ class RecipientForm(forms.ModelForm):
 
 class MailingForm(forms.ModelForm):
     """Форма для создания новой рассылки"""
-    message = forms.ModelChoiceField(queryset=Message.objects.all())
-    recipients = forms.ModelMultipleChoiceField(
-        queryset=Recipient.objects.all(),
-        widget=forms.CheckboxSelectMultiple
-    )
-
     class Meta:
         model = Mailing
         fields = ['message', 'recipients', 'status', 'started_at', 'finished_at',]
         exclude = []
+        widgets = {
+            'recipients': forms.CheckboxSelectMultiple,
+        }
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)  # Получаем пользователя из view
+        super(MailingForm, self).__init__(*args, **kwargs)
+
+        if self.user:
+            self.fields['message'].queryset = Message.objects.filter(owner=self.user)
+            self.fields['recipients'].queryset = Recipient.objects.filter(owner=self.user)
+
+        self.fields['message'].lable = 'Сообщение'
+        self.fields[
+            'started_at'].help_text = 'Обязательное поле! Введите дату и время начала рассылки в формате: ДД.ММ.ГГГГ ЧЧ:ММ:СС'
+        self.fields[
+            'finished_at'].help_text = 'Обязательное поле! Введите дату и время завершения рассылки в формате: ДД.ММ.ГГГГ ЧЧ:ММ:СС'
 
 
 class MailingManagerForm(forms.ModelForm):

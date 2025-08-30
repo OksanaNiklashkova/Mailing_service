@@ -16,13 +16,14 @@
     </tr>
     </thead>
 {% for recipient in recipients %}
+{% if user == recipient.owner or perms.mailing.can_finished_mailing %}
 <tr class="table-warning">
     <td class="table-danger" >{{recipient.email}}</td>
     <td class="table-warning">{{recipient.recipient_name}}</td>
     <td class="table-success">{{recipient.comment|truncatechars:150|default:"Нет комментария"}}</td>
     <td class="table-light">
     <div class="d-flex flex-column gap-1" style="min-width: 100px;">
-        {% if user == recipient.owner or perms.mailing.can_finished_mailing %}
+
         <a href="{% url 'mailing:recipient' recipient.pk %}" class="btn btn-success btn-sm w-100 py-1">Просмотреть</a>
         {% endif %}
         {% if user == recipient.owner %}

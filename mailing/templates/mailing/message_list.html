@@ -17,18 +17,17 @@
     </thead>
     {% for message in messages %}
     <tr class="table-warning">
+        {% if user == message.owner %}
         <td class="table-danger"><a href="{% url 'mailing:message' message.pk %}">{{message.topik}}</a></td>
         <td class="table-light">{{message.text|truncatechars:150}}</td>
         <td class="table-light">
             <div class="d-flex flex-column gap-1" style="min-width: 100px;">
-                {% if user == message.owner %}
                 <p><a href="{% url 'mailing:message' message.pk %}" class="btn btn-success btn-sm w-100 py-1">Просмотреть</a></p>
                 <p><a href="{% url 'mailing:message_edit' message.pk %}" class="btn btn-warning btn-sm w-100 py-1">Редактировать</a></p>
                 <p><a href="{% url 'mailing:message_delete' message.pk %}" class="btn btn-danger btn-sm w-100 py-1">Удалить</a></p>
-                {% endif %}
             </div>
-
         </td>
+        {% endif %}
     </tr>
     {% endfor %}
 </table>

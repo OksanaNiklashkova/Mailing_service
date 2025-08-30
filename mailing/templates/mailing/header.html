@@ -5,16 +5,18 @@
 </div>
 
 <div class="d-flex justify-content-center mb-3">
+    <div class="d-grid gap-2 col-3 mx-auto mb-3">
     <form method="post" action="{% url 'users:logout' %}">
         {% csrf_token %}
-        <button class="btn btn-lg" style="color: black; background: #C26C4A;" type="submit">Выход</button>
+        <button class="btn btn-lg w-100" style="color: black; background: #C26C4A;" type="submit">Выход</button>
     </form>
+</div>
 </div>
 {% else %}
 <div class="row justify-content-center text-center mb-3">
     <h6 class="display-7">Добро пожаловать, Гость!</h6>
 </div>
-<div class="d-grid gap-2 col-6 mx-auto mb-3">
+<div class="d-grid gap-2 col-3 mx-auto mb-3">
     <a class="btn btn-lg" style="color: black; background: #C26C4A;" href="{% url 'users:login' %}">Вход</a>
     <a class="btn btn-light btn-lg" href="{% url 'users:register' %}">Регистрация</a>
 </div>
