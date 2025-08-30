@@ -4,10 +4,11 @@ from mailing.services import send_message
 
 
 class Command(BaseCommand):
-    help = 'Send current mailings'
+    help = "Send current mailings"
 
     def handle(self, *args, **options):
         from mailing.models import Mailing
+
         now = timezone.now()
         success_count = 0
         error_count = 0
@@ -16,7 +17,7 @@ class Command(BaseCommand):
             mailings = Mailing.objects.filter(
                 started_at__lte=now,
                 finished_at__gte=now,
-                status__in=[Mailing.STATUS_CREATED, Mailing.STATUS_STARTED]
+                status__in=[Mailing.STATUS_CREATED, Mailing.STATUS_STARTED],
             )
 
             for mailing in mailings:
@@ -31,8 +32,10 @@ class Command(BaseCommand):
                     error_count += 1
 
             self.stdout.write(
-                self.style.SUCCESS(f'Рассылки отправлены. Успешно: {success_count}, Ошибок: {error_count}')
+                self.style.SUCCESS(
+                    f"Рассылки отправлены. Успешно: {success_count}, Ошибок: {error_count}"
+                )
             )
 
         except Exception as e:
-            self.stdout.write(self.style.ERROR(f'Ошибка: {str(e)}'))
+            self.stdout.write(self.style.ERROR(f"Ошибка: {str(e)}"))

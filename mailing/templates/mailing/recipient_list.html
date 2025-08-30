@@ -16,7 +16,7 @@
     </tr>
     </thead>
 {% for recipient in recipients %}
-{% if user == recipient.owner or perms.mailing.can_finished_mailing %}
+{% if user == recipient.owner or perms.mailing.can_view_recipient %}
 <tr class="table-warning">
     <td class="table-danger" >{{recipient.email}}</td>
     <td class="table-warning">{{recipient.recipient_name}}</td>

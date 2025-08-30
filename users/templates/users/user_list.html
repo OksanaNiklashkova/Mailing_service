@@ -24,7 +24,7 @@
     </td>
     <td class="table-danger" >{{user.email}}
         <p><a class="flex-sm-fill text-sm-center p-2 btn btn-sm" style="color: black; background: burlywood;"
-           href="{% url 'users:user_form' user.pk %}">Заблокировать</a></p>
+           href="{% url 'users:user_form' user.pk %}">Заблокировать/Разблокировать</a></p>
     </td>
     <td class="table-warning">{{user.username|default:"не указано"}}</td>
     <td class="table-secondary">

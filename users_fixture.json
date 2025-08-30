@@ -1,0 +1,90 @@
+[
+{
+    "model": "users.customuser",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$1CpqASIDSMvcNbjm8AXP1b$tSaNVVoAygH18pVc6q3NMgaPmnvLR2S2gcec886pl04=",
+        "last_login": "2025-08-30T18:26:09.512Z",
+        "is_superuser": true,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2025-08-17T16:11:06Z",
+        "username": "admin",
+        "email": "skyappstore@yandex.ru",
+        "phone": null,
+        "country": null,
+        "avatar": "images/placeholder.png",
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$TkCqXTbVhYemfFMfJn50KL$/XWzuhR+KuGQvtMXMj8Ro6u51NZgVmdQXzCi/GUmwWA=",
+        "last_login": "2025-08-30T17:47:35.003Z",
+        "is_superuser": false,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-08-22T17:14:44.868Z",
+        "username": "Просто пользователь",
+        "email": "o.niklashkova@gmail.com",
+        "phone": "89001010101",
+        "country": "Россия",
+        "avatar": "images/cat_ABEtOa0.jpg",
+        "groups": [1],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$Bqq3dZsEmVtv0vz9uJZHiR$Or9LxhWBC8M2c+SMw6E1KeLjwwAVrOaCPHr7Qr2Sp8I=",
+        "last_login": null,
+        "is_superuser": false,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": false,
+        "date_joined": "2025-08-30T13:12:29Z",
+        "username": "Менеджер",
+        "email": "example@mail.com",
+        "phone": null,
+        "country": null,
+        "avatar": "images/placeholder.png",
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$cynbeJ3efWSM01suszp9B2$5Mirk6vhYsOKvzXFVD+EQk1q6P5MyRQOuVVwKOImuoQ=",
+        "last_login": "2025-08-30T16:23:20.152Z",
+        "is_superuser": false,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-08-30T16:23:19.266Z",
+        "username": null,
+        "email": "o.niklashkova@ptk-sm.ru",
+        "phone": null,
+        "country": null,
+        "avatar": "images/placeholder.png",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]

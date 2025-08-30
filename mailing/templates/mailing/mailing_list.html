@@ -17,7 +17,7 @@
     </thead>
 {% for mailing in mailings %}
 <tr class="table-warning">
-    {% if user == mailing.owner or perms.mailing.can_finished_mailing %}
+    {% if user == mailing.owner or perms.mailing.can_view_mailing %}
     <td class="table-danger" ><a href="{% url 'mailing:mailing' mailing.pk %}">{{mailing.message.topik}}</a></td>
     <td class="table-warning">{{mailing.status}}</td>
     <td class="table-secondary">{{mailing.started_at|date:"d M Y"|default:"не начата"}}-{{mailing.finished_at|date:"d M Y"|default:"не завершена"}}</td>

@@ -10,8 +10,12 @@
         <p>{{message.text}}</p>
     </div>
 <div class="btn-group d-flex flex-row gap-1" role="group" style="min-width: 100px; margin: 10px;">
+    {% if user == message.owner or perms.mailing.can_view_message %}
+    {% endif %}
+    {% if user == message.owner %}
   <a href="{% url 'mailing:message_edit' message.pk %}" class="btn btn-warning">Редактировать</a>
   <a href="{% url 'mailing:message_delete' message.pk %}" type="button" class="btn btn-danger">Удалить</a>
+    {% endif %}
   <a href="{% url 'mailing:message_list' %}" type="button" class="btn btn-success">Вернуться к списку сообщений</a>
 </div>
 </div>
