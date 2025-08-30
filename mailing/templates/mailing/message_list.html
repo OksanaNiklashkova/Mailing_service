@@ -4,29 +4,33 @@
 
 {% block content %}
 {% include 'mailing/header.html' %}
-<a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="{% url 'mailing:message_new' %}">Создать сообщение</a>
+<a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;"
+   href="{% url 'mailing:message_new' %}">Создать сообщение</a>
 <h4>Список сообщений для рассылок</h4>
 <table class="table">
     <thead>
     <tr>
-    <th scope="col" style="color: white; background: #C26C4A;">Тема</th>
-    <th scope="col" style="background: wheat;">Текст</th>
-    <th scope="col" style="background: white;">Действия</th>
+        <th scope="col" style="color: white; background: #C26C4A;">Тема</th>
+        <th scope="col" style="background: wheat;">Текст</th>
+        <th scope="col" style="background: white;">Действия</th>
     </tr>
     </thead>
-{% for message in messages %}
-<tr class="table-warning">
-    <td class="table-danger" ><a href="{% url 'mailing:message' message.pk %}">{{message.topik}}</a></td>
-    <td class="table-light">{{message.text|truncatechars:150}}</td>
+    {% for message in messages %}
+    <tr class="table-warning">
+        <td class="table-danger"><a href="{% url 'mailing:message' message.pk %}">{{message.topik}}</a></td>
+        <td class="table-light">{{message.text|truncatechars:150}}</td>
         <td class="table-light">
-        {% if user == message.owner %}
-        <p><a href="{% url 'mailing:message' message.pk %}" class="btn btn-success btn-sm">Просмотреть</a></p>
-        <p><a href="{% url 'mailing:message_edit' message.pk %}" class="btn btn-warning btn-sm">Редактировать</a></p>
-        <p><a href="{% url 'mailing:message_delete' message.pk %}" class="btn btn-danger btn-sm">Удалить</a></p>
-        {% endif %}
-        <a href="{% url 'mailing:home' %}" class="btn btn-sm" style="color: black; background: #C26C4A;">На главную</a>
-    </td>
-</tr>
-{% endfor %}
+            <div class="d-flex flex-column gap-1" style="min-width: 100px;">
+                {% if user == message.owner %}
+                <p><a href="{% url 'mailing:message' message.pk %}" class="btn btn-success btn-sm w-100 py-1">Просмотреть</a></p>
+                <p><a href="{% url 'mailing:message_edit' message.pk %}" class="btn btn-warning btn-sm w-100 py-1">Редактировать</a></p>
+                <p><a href="{% url 'mailing:message_delete' message.pk %}" class="btn btn-danger btn-sm w-100 py-1">Удалить</a></p>
+                {% endif %}
+            </div>
+
+        </td>
+    </tr>
+    {% endfor %}
 </table>
+<a href="{% url 'mailing:home' %}" class="btn btn-outline btn-sm w-100 py-1" style="color: white; background: #C26C4A;">На главную</a>
 {% endblock %}

@@ -26,7 +26,9 @@
         <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="{% url 'mailing:mailing_list' %}" >Рассылки</a>
         <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="{% url 'mailing:message_list' %}">Сообщения</a>
         <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="{% url 'mailing:recipient_list' %}">Получатели рассылок</a>
+        {% if user.is_authenticated %}
         <a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="{% url 'mailing:send_attempt_list' %}">Попытки рассылок</a>
+        {% endif %}
     </nav>
 </nav>
 

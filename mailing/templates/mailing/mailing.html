@@ -17,12 +17,12 @@
     </div>
 
 {% if user == mailing.owner %}
-<div class="btn-group" role="group" aria-label="Basic mixed styles example">
-  <a href="{% url 'mailing:send_mailing' mailing.pk %}" class="btn btn-success">Отправить</a>
-  <a href="{% url 'mailing:mailing_edit' mailing.pk %}" class="btn btn-warning">Редактировать</a>
-  <a href="{% url 'mailing:mailing_delete' mailing.pk %}" type="button" class="btn btn-danger">Удалить</a>
+<div class="btn-group d-flex flex-row gap-1" role="group" style="min-width: 100px; margin: 10px;">
+  <a href="{% url 'mailing:send_mailing' mailing.pk %}" class="btn btn-success" style="margin: 5px;">Отправить</a>
+  <a href="{% url 'mailing:mailing_edit' mailing.pk %}" class="btn btn-warning" style="margin: 5px;">Редактировать</a>
+  <a href="{% url 'mailing:mailing_delete' mailing.pk %}" type="button" class="btn btn-danger" style="margin: 5px;">Удалить</a>
 {% endif %}
-  <a href="{% url 'mailing:mailing_list' %}" type="button" class="btn" style="color: black; background: #C26C4A;">Вернуться к списку рассылок</a>
+  <a href="{% url 'mailing:mailing_list' %}" type="button" class="btn" style="color: black; background: #C26C4A; margin: 5px;">Вернуться к списку рассылок</a>
 </div>
 </div>
 {% endblock %}

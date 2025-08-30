@@ -21,16 +21,19 @@
     <td class="table-warning">{{recipient.recipient_name}}</td>
     <td class="table-success">{{recipient.comment|truncatechars:150|default:"Нет комментария"}}</td>
     <td class="table-light">
+    <div class="d-flex flex-column gap-1" style="min-width: 100px;">
         {% if user == recipient.owner %}
-        <p><a href="{% url 'mailing:recipient' recipient.pk %}" class="btn btn-success btn-sm">Просмотреть</a></p>
-        <p><a href="{% url 'mailing:recipient_edit' recipient.pk %}" class="btn btn-warning btn-sm">Редактировать</a></p>
-        <p><a href="{% url 'mailing:recipient_delete' recipient.pk %}" class="btn btn-danger btn-sm">Удалить</a></p>
-
+        <a href="{% url 'mailing:recipient' recipient.pk %}" class="btn btn-success btn-sm w-100 py-1">Просмотреть</a>
+        <a href="{% url 'mailing:recipient_edit' recipient.pk %}" class="btn btn-warning btn-sm w-100 py-1">Редактировать</a>
+        <a href="{% url 'mailing:recipient_delete' recipient.pk %}" class="btn btn-danger btn-sm w-100 py-1">Удалить</a>
         {% endif %}
-        <a href="{% url 'mailing:home' %}" class="btn btn-sm" style="color: black; background: #C26C4A;">На главную</a>
-    </td>
+    </div>
+</td>
 
 </tr>
 {% endfor %}
 </table>
+<div class="mt-3">
+    <a href="{% url 'mailing:home' %}" class="btn" style="color: black; background: #C26C4A;">На главную</a>
+</div>
 {% endblock %}

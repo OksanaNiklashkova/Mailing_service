@@ -4,8 +4,30 @@
 
 {% block content %}
 {% include 'mailing/header.html' %}
-<h2 class="pt-3 pb-2 mb-3">Pассылкa {{mailing.pk}} отправлена пользователем {{owner}} {% if success %} успешно {% else %} неуспешно {% endif %}</h2>
-<a href="{% url 'mailing:send_attempt' attempt.pk %}" class="btn btn-outline-success btn-sm">Подробнее</a>
-<a href="{% url 'mailing:send_attempt_list' %}" class="btn btn-sm" style="color: black; background: burlywood;">К списку попыток рассылок</a>
-<a href="{% url 'mailing:home' %}" class="btn btn-sm" style="color: black; background: #C26C4A;">На главную</a>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card" style="margin-bottom: 50px;">
+                <div class="card-body text-center">
+                    {% if success %}
+                    <div class="text-success mb-3">
+                        <i class="fas fa-check-circle fa-5x"></i>
+                    </div>
+                    <h3 class="card-title text-success">Рассылка успешно отправлена!</h3>
+                    <p class="text-muted">Сообщения доставлены получателям.</p>
+                    {% else %}
+                    <div class="text-danger mb-3">
+                        <i class="fas fa-exclamation-circle fa-5x"></i>
+                    </div>
+                    <h3 class="card-title text-danger">Рассылка не отправлена</h3>
+                    <p class="text-muted">Произошла ошибка при отправке.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <a href="{% url 'mailing:send_attempt' attempt.pk %}" class="btn btn-warning btn-sm">Посмотреть отчет о попытке рассылки</a>
+        <a href="{% url 'mailing:send_attempt_list' %}" class="btn btn-sm" style="color: black; background: burlywood; margin: 10px;">К списку попыток рассылок</a>
+        <a href="{% url 'mailing:home' %}" class="btn btn-sm" style="color: black; background: #C26C4A;">Вернуться на главную</a>
+    </div>
+</div>
 {% endblock %}

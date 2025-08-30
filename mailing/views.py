@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -12,6 +13,13 @@ from mailing.services import send_message
 
 class HomeView(TemplateView):
     template_name = 'mailing/home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['mailings'] = len(Mailing.objects.all())
+        context['started_mailings'] = len(Mailing.objects.filter(status='запущена'))
+        context['recipients'] = len(Recipient.objects.all())
+        return context
 
 
 class MessageCreateView(LoginRequiredMixin, CreateView):
@@ -218,16 +226,21 @@ class SendAttemptDetailView(LoginRequiredMixin, DetailView):
 
 
 class SendMailingView(View):
-    template_name = 'mailing/send_mailing.html'
 
     def get(self, request, pk):
         mailing = get_object_or_404(Mailing, pk=pk, owner=request.user)
 
-        success = send_message(mailing.pk, request)
+        success, attempt = send_message(mailing.pk, request)
 
         if success:
-            print('Рассылка успешно отправлена')
+            messages.success(request, 'Рассылка успешно отправлена!')
         else:
-            print('Рассылка не отправлена')
+            messages.error(request, 'Рассылка не отправлена. Проверьте детали.')
 
-        return redirect('mailing:mailing_list')
+        context = {
+            'success': success,
+            'mailing': mailing,
+            'attempt': attempt,
+        }
+
+        return render(request, 'mailing/send_mailing.html', context)
