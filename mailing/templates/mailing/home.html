@@ -1,0 +1,20 @@
+{% extends 'mailing/base.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+{% include 'mailing/header.html' %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6" style="margin-bottom: 50px;">
+            <div class="card-body text-center">
+                <h3 class="card-title text-success">Всего отправлено рассылок {{mailings}}</h3>
+                <h3 class="card-title text-warning">Активных рассылок {{started_mailings}}</h3>
+                <h3 class="card-title text-danger">Уникальных получателей {{recipients}}</h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+<img src="/media/images/home.png" class="img-fluid" alt="Заставка главной страницы">
+{% endblock %}

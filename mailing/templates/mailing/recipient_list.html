@@ -1,0 +1,42 @@
+{% extends 'mailing/base.html' %}
+
+{% block title %}Список получателей рассылки{% endblock %}
+
+{% block content %}
+{% include 'mailing/header.html' %}
+<a class="flex-sm-fill text-sm-center p-2 btn btn-lg" style="color: black; background: burlywood;" href="{% url 'mailing:recipient_new' %}">Добавить нового получателя</a>
+<h4>Список получателей рассылок</h4>
+<table class="table">
+    <thead>
+    <tr>
+    <th scope="col" style="color: white; background: #C26C4A;">Почта получателя</th>
+    <th scope="col" style="background: burlywood;">ФИО получателя</th>
+    <th scope="col" style="background: wheat;">Комментарий</th>
+    <th scope="col" style="background: white;">Действия</th>
+    </tr>
+    </thead>
+{% for recipient in recipients %}
+{% if user == recipient.owner or perms.mailing.can_view_recipient %}
+<tr class="table-warning">
+    <td class="table-danger" >{{recipient.email}}</td>
+    <td class="table-warning">{{recipient.recipient_name}}</td>
+    <td class="table-success">{{recipient.comment|truncatechars:150|default:"Нет комментария"}}</td>
+    <td class="table-light">
+    <div class="d-flex flex-column gap-1" style="min-width: 100px;">
+
+        <a href="{% url 'mailing:recipient' recipient.pk %}" class="btn btn-success btn-sm w-100 py-1">Просмотреть</a>
+        {% endif %}
+        {% if user == recipient.owner %}
+        <a href="{% url 'mailing:recipient_edit' recipient.pk %}" class="btn btn-warning btn-sm w-100 py-1">Редактировать</a>
+        <a href="{% url 'mailing:recipient_delete' recipient.pk %}" class="btn btn-danger btn-sm w-100 py-1">Удалить</a>
+        {% endif %}
+    </div>
+</td>
+
+</tr>
+{% endfor %}
+</table>
+<div class="mt-3">
+    <a href="{% url 'mailing:home' %}" class="btn" style="color: black; background: #C26C4A;">На главную</a>
+</div>
+{% endblock %}
